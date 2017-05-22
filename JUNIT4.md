@@ -78,19 +78,19 @@ A equipe de desenvolvimento é composta por membros e contribuidores. Os membros
 
  - Membros
 
-David Saff - david@saff.net
-Kevin Cooney - kcooney@google.com
-Stefan Birkner - mail@stefan-birkner.de
-Marc Philipp - mail@marcphilipp.de
+- David Saff - david@saff.net
+- Kevin Cooney - kcooney@google.com
+- Stefan Birkner - mail@stefan-birkner.de
+- Marc Philipp - mail@marcphilipp.de
 
  - Contribuidores
  
-stefanbirkner - https://github.com/stefanbirkner
-dsaff - https://github.com/dsaff
-Tibor17 - https://github.com/Tibor17
-marcphilipp - https://github.com/marcphilipp
-kcooney - https://github.com/kcooney
-pimterry - https://github.com/pimterry
+- stefanbirkner - https://github.com/stefanbirkner
+- dsaff - https://github.com/dsaff
+- Tibor17 - https://github.com/Tibor17
+- marcphilipp - https://github.com/marcphilipp
+- kcooney - https://github.com/kcooney
+- pimterry - https://github.com/pimterry
 
 # 3. Releases
 ### 3.1 Categorias
@@ -203,21 +203,25 @@ O JUnit4 conta com as técnicas do Hamcrest para verificar os resultados dos tes
 O controle de dependências do sistema JUnit4 é feito utilizando o Maven. O Maven é uma ferramenta de automação de compilação. 
 
 # 5. Arquitetura
-###5.1 Padrões de Projeto
+### 5.1 Padrões de Projeto
 O JUnit utiliza em sua implementação, alguns padrões de projeto, conforme pode ser visto na Figura 1. 
 
 ![Figura 1. Padrões de projeto encontrados no JUnit](http://junit.sourceforge.net/doc/cookstour/Image6.gif)
+
 Figura 1. Padrões de projeto encontrados no JUnit (Fonte: http://junit.sourceforge.net/doc/cookstour)
 
 Posteriormente serão apresentados alguns destes padrões, explicando em quais classes do JUnit eles se encontram.
 
-####5.1.1 Command
+#### 5.1.1 Command
 A classe TestCase é a classe que contém o método run. Esta classe possui o papel de encapsular um pedido de teste como um objeto (Padrão Command).
-####5.1.2 Template Method
+
+#### 5.1.2 Template Method
 Além disso, esta classe possui os métodos abstratos setUp(), runTest() e tearDown(). Estes métodos são responsáveis, respectivamente, por criar o contexto, conter o código a ser executado e as validações e limpar o contexto. É usado aqui, o padrão de projeto Template Method. Este padrão permite com que as subclasses definam o comportamento de partes de código (abstratas), implementando estas partes de acordo com a necessidade de cada subclasse. As classes concretas serão as classes que o usuário do framework irá criar para testar seu código.
-####5.1.3 Collecting Parameter
+
+#### 5.1.3 Collecting Parameter
 O método run recebe por parâmetro um objeto TestResult. Essa classe coleciona informações de resultados de execuções. Algumas destas informações são: quantidade de testes executados, quantidade de falhas e quantidade de erros. Essa estratégia de se passar o objeto como parâmetro que irá colecionar informações está descrita no padrão Collecting Parameter. Esse padrão é uma solução para agrupar o resultado de vários métodos. Existe também um outro método run sem parâmetros que já cria o próprio TestResult (padrão Factory Method).
-####5.1.4 Composite
+
+#### 5.1.4 Composite
 Usando o padrão Composite foi possível disponibilizar para os desenvolvedores recursividade de suites (suites de suites de teste). O Composite é um padrão que permite que os métodos de uma classe sejam aplicáveis também ao conjunto de classes. As classes que participam deste padrão são:
 
  - Componente: Implementa o componente padrão
@@ -232,25 +236,27 @@ No caso do JUnit:
  - Composite: classe TestSuite.java
  - Cliente: classes que contém a *annotation* @Test
 
-###5.2 Estilo de Codificação
+### 5.2 Estilo de Codificação
 Estilo de Codificação ou Coding Style é um conjunto de orientações usadas para codificar um sistema com o objetivo de organizar e facilitar o entendimento do código durante a existência do projeto.
 
 O projeto JUnit utiliza o guia de estilo para projetos *open-source* criado pelo Google (Chttps://github.com/google/styleguide).
 
 As orientações para colaborar com o projeto JUnit seguindo o estilo de codificação, podem ser encontradas no arquivo CODING_STYLE.txt para os arquivos dentro dos pacotes org.junit.* e no arquivo LEGACY_CODING_STYLE.txt para os arquivos dentro dos pacotes junit.*. Ambos os arquivos se encontram na raiz do projeto. 
 
-###5.3 Diagrama de Pacotes
+### 5.3 Diagrama de Pacotes
  
 O código fonte do Junit está organizado em duas estruturas de pacotes. A estrutura abaixo de junit.* contém o código que existia nas versões anteriores do Junit. No diagrama de pacotes mostrado a seguir é possível ver a organização dos pacotes dentro desta estrutura:
  
 ![Pacotes abaixo de junit.*](https://lh3.googleusercontent.com/-YcePvfhJ_40/WSHi7RxtgkI/AAAAAAAAElQ/bozTp_pdCmELYSMBwg4P1xRfuNr2AvfRQCLcB/s0/packageJunit.png "packageJunit.png")
+
 Figura 2. Diagrama de pacotes abaixo de junit.*.
 
 Já a estrutura abaixo de org.junit.* contém o código existente na versão 4 do JUnit:
  ![Pacotes abaixo de org.*](https://lh3.googleusercontent.com/-pRfYfo2Ukj0/WSHi0QFgRCI/AAAAAAAAElI/Z8YJjqdZdt4LOC99Qh5BNuQtpmxj81zJgCLcB/s0/packageOrg.png "packageOrg.png")
+ 
  Figura 3. Diagrama de pacotes abaixo de org.junit.*.
 
-###5.4 Testes Unitários
+### 5.4 Testes Unitários
 Os testes unitários são feitos usando o próprio JUnit. Por isso, ao criar um novo teste, é necessário utilizar a sintaxe do JUnit, conforme descrito na seção 1.
 
 Os testes unitários estão todos concentrados em Suites de Testes. Cada pacote possui uma suite de teste chamada AllTests.java. Em códigos feitos na versão 3.x do JUnit, cada suite AllTests.java (pacote junit.\*) chama, diretamente, os testes a serem executados. Para a verão 4, as suites AllTests.java (pacote org.junit.\*) chama outras suites, recurso adicionado nesta versão e que foi descrito na seção 5.1.4 deste capítulo.
